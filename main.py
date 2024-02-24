@@ -1,12 +1,13 @@
-# In The Name Of Allah
+# In The Name Of Allah...
 # Developed With <3 By ITMammad...
-# website: https://itmammad.ir
+# Date: Sat 24 Feb 2024
+# Website: https://itmammad.ir
 
-import hashlib
+from hashlib import sha256
 
 class Encryption:
     def __init__(self, key):
-        self.key = hashlib.sha256(("Key is: " + (key*2)).encode()).digest()
+        self.key = sha256(("Key is: " + (key*2)).encode()).digest()
         key_blocks = []
 
         for i in range(8):
@@ -78,23 +79,15 @@ class Encryption:
             
         return "".join([chr(x) for x in data_bytes])
 
-op = ""
-while not op in ["E", "D", "e", "d"]:
-    op = input("Enter Operation (Encryption/Decryption): (E/D/e/d)? ")
+if __name__ == "__main__":
+    op = ""
+    while not op in ["E", "D", "e", "d"]:
+        op = input("Enter Operation (Encryption/Decryption): (E/D/e/d)? ")
 
-dictionary = { "adverb": "", "verb": "" }
-if op in ["E", "e"]:
-    dictionary["adverb"] = "Encryption"
-    dictionary["verb"] = "Encrypt"
-else:
-    dictionary["adverb"] = "Decryption"
-    dictionary["verb"] = "Decrypt"
+    dictionary = { "adverb": "Encryption" if op in ["E", "e"] else "Decryption", "verb": "Encrypt" if op in ["E", "e"] else "Decrypt" }
 
-key = input(f"Enter {dictionary['adverb']} Password/Key: ")
-data = input(f"Enter Data That You Want To {dictionary['verb']}: ")
+    key = input(f"Enter {dictionary['adverb']} Password/Key: ")
+    data = input(f"Enter Data That You Want To {dictionary['verb']}: ")
 
-encryption = Encryption(key)
-if op in ["E", "e"]:
-    print(encryption.encrypt(data))
-else:
-    print(encryption.decrypt(data))
+    encryption = Encryption(key)
+    print(encryption.encrypt(data) if op in ["E", "e"] else encryption.decrypt(data))
